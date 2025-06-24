@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h2>Login</h2>
+    <form @submit.prevent="fazerLogin">
+      <input type="email" v-model="email" placeholder="Email" required>
+      <br>
+      <input type="password" v-model="senha" placeholder="Senha" required>
+      <br>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <p v-if="erro" style="color:red">{{ erro }}</p>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          email: '',
+          senha: '',
+          erro: ''
+        };
+      },
+      methods: {
+        async fazerLogin() {
+          try {
+            const response = await axios.post('http://localhost:3000/login', {
+              email: this.email,
+              senha: this.senha
+            });
+
+            localStorage.setItem('token', response.data.token);
+            window.location.href = 'protegida.html';
+          } catch (error) {
+            this.erro = 'Credenciais inválidas.';
+          }
+        }
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>

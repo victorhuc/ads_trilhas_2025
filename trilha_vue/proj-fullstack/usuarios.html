@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Usuários</title>
+  <script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <h1>Usuários Cadastrados</h1>
+    <ul>
+      <li v-for="usuario in usuarios" :key="usuario.id">
+        {{ usuario.nome }} - {{ usuario.email }}
+      </li>
+    </ul>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          usuarios: []
+        };
+      },
+      mounted() {
+        axios.get('http://localhost:3000/usuarios')
+          .then(response => {
+            this.usuarios = response.data;
+          })
+          .catch(error => {
+            console.error('Erro ao buscar usuários:', error);
+          });
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
