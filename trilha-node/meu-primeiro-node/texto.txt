@@ -1,0 +1,2 @@
+Este é o conteúdo do meu arquivo de texto.
+Ele será lido pelo script Node.js.

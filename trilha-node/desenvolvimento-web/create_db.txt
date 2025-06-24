@@ -1,0 +1,12 @@
+CREATE DATABASE sistema;
+
+USE sistema;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL
+);
+
+INSERT INTO users (name, email) VALUES ('João Silva', 'joao.silva@example.com');
+INSERT INTO users (name, email) VALUES ('Maria Oliveira', 'maria.oliveira@example.com');

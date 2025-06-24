@@ -1,0 +1,7 @@
+{
+  "nome": "Maria Silva",
+  "idade": 30,
+  "email": "maria.silva@example.com",
+  "ativo": true,
+  "hobbies": ["leitura", "caminhada", "cozinhar"]
+}
