@@ -16,9 +16,19 @@
           <span class="btn-icon"></span>
           Logout
         </button>
+        
       </div>
     </div>
-
+  <!-- Weather Info Section -->
+    <div v-if="weather" class="weather-section">
+      <h3>Informações de Clima</h3>
+      <div class="weather-info">
+        <p><strong>Cidade:</strong> {{ weather.name }}</p>
+        <p><strong>Temperatura:</strong> {{ weather.main.temp }}°C</p>
+        <p><strong>Descrição:</strong> {{ weather.weather[0].description }}</p>
+      </div>
+    </div>
+    <br>
     <!-- Products Grid -->
     <div class="products-section">
       <div v-if="products.length === 0" class="empty-state">
@@ -48,6 +58,8 @@
         </div>
       </div>
     </div>
+
+  
     
     <!-- Modal Form -->
     <div v-if="isEditing || isCreating" class="modal-overlay" @click="cancelEdit">
@@ -134,6 +146,7 @@ export default {
         description: '',
         id: null,
       },
+      weather: null, // Novo estado para armazenar as informações de clima
     };
   },
   methods: {
@@ -159,6 +172,22 @@ export default {
         alert('Falha ao carregar produtos!');
       }
     },
+
+    // Método para carregar as informações de clima
+    async loadWeather() {
+      try {
+        const city = 'Joinville'; // Cidade para buscar as informações de clima
+        const apiKey = '07207015b6a8fe608d15bf04b10a7669'; // Substitua com sua chave da API do OpenWeatherMap
+        
+        const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
+        
+        this.weather = response.data; // Armazena os dados de clima
+      } catch (error) {
+        console.error(error);
+        alert('Falha ao carregar as informações de clima!');
+      }
+    },
+
     editProduct(product) {
       this.productForm = { ...product }; 
       this.isEditing = true; 
@@ -244,6 +273,7 @@ export default {
   },
   created() {
     this.loadProducts();
+    this.loadWeather(); // Chama o método de carregamento do clima ao iniciar o componente
   },
 };
 </script>
@@ -627,5 +657,23 @@ export default {
   .form-actions {
     flex-direction: column;
   }
+}
+
+.weather-section {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 32px;
+}
+
+.weather-info {
+  font-size: 16px;
+  color: #374151;
+}
+
+.weather-info strong {
+  font-weight: 700;
+  color: #667eea;
 }
 </style>
