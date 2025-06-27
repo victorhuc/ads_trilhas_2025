@@ -1,6 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2');
+const usuarioRoutes = require('./routes/usuarioRoutes');
+const produtoRoutes = require('./routes/produtoRoutes');
+const { verificarAuth, verificarAdmin } = require('./middleware/authMiddleware');
 
 const app = express();
 app.use(express.json());
@@ -25,6 +28,17 @@ db.connect((err) => {
 app.get('/', (req, res) => {
     res.send('Servidor rodando!');
 });
+
+// Rotas de produtos
+app.use('/api', produtoRoutes);
+
+// Rotas de usuários
+app.use('/api', usuarioRoutes);
+
+// app.use('/api', verificarAuth, produtoRoutes);
+
+// Rotas de produtos para admin (protegidas por admin)
+// app.use('/api', verificarAuth, verificarAdmin, produtoRoutes);
 
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');
