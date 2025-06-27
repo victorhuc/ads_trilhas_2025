@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config(); // Garante que as variáveis de ambiente estejam carregadas
