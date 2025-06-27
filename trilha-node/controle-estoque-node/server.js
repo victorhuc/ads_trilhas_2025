@@ -1,6 +1,6 @@
 const express = require('express');
 const cors = require('cors');
-require('dotenv').config(); // Garante que as variáveis de ambiente estejam carregadas
+// require('dotenv').config(); // Garante que as variáveis de ambiente estejam carregadas
 const { testDbConnection } = require('./src/config/db'); // Importa a função de teste de conexão
 const app = express();
 const PORT = process.env.PORT || 3000; // Define a porta do servidor (3000 como padrão)
